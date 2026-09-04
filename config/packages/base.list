@@ -50,4 +50,3 @@ rfkill
 
 # Memory & Scheduling Optimization
 zram-tools
-ananicy-cpp

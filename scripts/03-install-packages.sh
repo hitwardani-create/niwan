@@ -49,13 +49,26 @@ sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 update-locale LANG=en_US.UTF-8
 
-echo "[*] Installing queued packages (this may take a while)..."
-# Filter valid packages
-AVAILABLE_PKGS=\$(cat /tmp/packages.to_install | tr '\n' ' ')
-apt-get install -y --no-install-recommends \$AVAILABLE_PKGS || {
-    echo "[!] Some recommended packages had conflicts, retrying with fallback..."
-    apt-get install -y \$AVAILABLE_PKGS
-}
+echo "[*] Validating queued packages against repository index..."
+VALID_PKGS=()
+SKIPPED_PKGS=()
+
+while IFS= read -r pkg || [ -n "\$pkg" ]; do
+    [ -z "\$pkg" ] && continue
+    if apt-cache show "\$pkg" >/dev/null 2>&1; then
+        VALID_PKGS+=("\$pkg")
+    else
+        SKIPPED_PKGS+=("\$pkg")
+    fi
+done < /tmp/packages.to_install
+
+if [ \${#SKIPPED_PKGS[@]} -gt 0 ]; then
+    echo "[!] Note: The following packages are not present in this Debian branch and will be skipped:"
+    printf '    - %s\n' "\${SKIPPED_PKGS[@]}"
+fi
+
+echo "[*] Installing \${#VALID_PKGS[@]} validated packages (this may take several minutes)..."
+apt-get install -y --no-install-recommends "\${VALID_PKGS[@]}"
 
 rm -f /tmp/packages.to_install
 EOF

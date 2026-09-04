@@ -1,7 +1,6 @@
 # Minimal Modern KDE Plasma Desktop (Wayland Focused)
 plasma-desktop
 plasma-workspace
-plasma-workspace-wayland
 kwin-wayland
 kwin-common
 sddm

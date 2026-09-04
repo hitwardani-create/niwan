@@ -9,7 +9,7 @@ firmware-realtek
 firmware-iwlwifi
 firmware-atheros
 firmware-libertas
-firmware-broadcom-brcm80211
+firmware-brcm80211
 firmware-sof-signed
 firmware-intel-misc
 

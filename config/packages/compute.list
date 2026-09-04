@@ -25,8 +25,8 @@ libglx-mesa0
 mesa-va-drivers
 mesa-vdpau-drivers
 
-# Intel Compute & Graphics
-intel-opencl-icd
+# Intel & Cross-Vendor Compute & Graphics
+mesa-opencl-icd
 intel-media-va-driver-non-free
 
 # Nvidia Support Tools (Auto-Detection & Firmware)
