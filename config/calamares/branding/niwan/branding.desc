@@ -10,9 +10,9 @@ strings:
     versionedName:       Niwan 1.0-alpha
     shortVersionedName:  Niwan 1.0
     bootloaderEntryName: Niwan
-    productUrl:          https://github.com/niwan-os/niwan
-    supportUrl:          https://github.com/niwan-os/niwan/issues
-    releaseNotesUrl:     https://github.com/niwan-os/niwan/releases
+    productUrl:          https://github.com/hitwardani-create/niwan
+    supportUrl:          https://github.com/hitwardani-create/niwan/issues
+    releaseNotesUrl:     https://github.com/hitwardani-create/niwan/releases
 
 images:
     productLogo:         "/usr/share/icons/hicolor/scalable/apps/distributor-logo.svg"
