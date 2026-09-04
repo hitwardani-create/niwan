@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     xorriso \
     squashfs-tools \
     dosfstools \
-    mksquashfs \
     git \
     curl \
     wget \

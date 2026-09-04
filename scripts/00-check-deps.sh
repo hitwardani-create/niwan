@@ -39,7 +39,6 @@ if [ ${#MISSING_COMMANDS[@]} -ne 0 ]; then
             xorriso \
             squashfs-tools \
             dosfstools \
-            mksquashfs \
             git \
             curl \
             tar \

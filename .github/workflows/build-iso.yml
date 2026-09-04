@@ -41,7 +41,6 @@ jobs:
             xorriso \
             squashfs-tools \
             dosfstools \
-            mksquashfs \
             git \
             curl \
             wget \
