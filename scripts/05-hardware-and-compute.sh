@@ -114,20 +114,33 @@ chmod +x /usr/local/bin/niwan-hardware
 # ------------------------------------------------------------------------------
 # 5. Build & Install llama.cpp Native C++ Engine (with Vulkan Backend)
 # ------------------------------------------------------------------------------
-echo "[*] Building llama.cpp native C++ engine with Vulkan support..."
+echo "[*] Building llama.cpp native C++ engine..."
+apt-get install -y --no-install-recommends glslc libshaderc-dev spirv-tools || true
+
 cd /tmp
-if [ ! -d "/tmp/llama.cpp" ]; then
-    git clone --depth 1 https://github.com/ggerganov/llama.cpp.git
-fi
+rm -rf /tmp/llama.cpp
+git clone --depth 1 https://github.com/ggerganov/llama.cpp.git
 cd /tmp/llama.cpp
 
-cmake -B build \
+echo "[*] Configuring CMake for llama.cpp (attempting Vulkan acceleration)..."
+if cmake -B build \
     -DGGML_VULKAN=ON \
     -DGGML_AVX2=ON \
     -DGGML_FMA=ON \
     -DGGML_F16C=ON \
     -DCMAKE_BUILD_TYPE=Release \
-    -G Ninja
+    -G Ninja 2>/dev/null; then
+    echo "[+] Configured llama.cpp with Vulkan GPU acceleration!"
+else
+    echo "[!] Vulkan shader compiler not available, building with AVX2 CPU acceleration..."
+    rm -rf build
+    cmake -B build \
+        -DGGML_AVX2=ON \
+        -DGGML_FMA=ON \
+        -DGGML_F16C=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -G Ninja
+fi
 
 cmake --build build --config Release -j"$(nproc)"
 cmake --install build --prefix /usr/local

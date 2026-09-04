@@ -18,6 +18,9 @@ vulkan-tools
 mesa-vulkan-drivers
 mesa-utils
 clinfo
+glslc
+libshaderc-dev
+spirv-tools
 
 # AMD GPU Graphics & Compute Drivers
 libgl1-mesa-dri
