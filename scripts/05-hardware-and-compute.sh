@@ -10,6 +10,16 @@ source "${ROOT_DIR}/distro.conf"
 
 echo "[*] Configuring Hardware Compute Stacks (Nvidia, AMD ROCm, Intel NPU, Vulkan)..."
 
+# Refresh DNS and keyrings inside rootfs
+sudo rm -f "${ROOTFS_DIR}/etc/resolv.conf"
+sudo cp -L /etc/resolv.conf "${ROOTFS_DIR}/etc/resolv.conf" 2>/dev/null || echo "nameserver 1.1.1.1" | sudo tee "${ROOTFS_DIR}/etc/resolv.conf" > /dev/null
+sudo mkdir -p "${ROOTFS_DIR}/etc/apt/keyrings"
+
+# Copy pre-bundled Intel oneAPI keyring
+if [ -f "${ROOT_DIR}/config/keys/oneapi-archive-keyring.gpg" ]; then
+    sudo cp "${ROOT_DIR}/config/keys/oneapi-archive-keyring.gpg" "${ROOTFS_DIR}/etc/apt/keyrings/oneapi-archive-keyring.gpg"
+fi
+
 # Copy systemd service template for llama-server
 sudo mkdir -p "${ROOTFS_DIR}/etc/systemd/system"
 sudo cp "${ROOT_DIR}/config/systemd/llama-server@.service" "${ROOTFS_DIR}/etc/systemd/system/llama-server@.service"
@@ -41,9 +51,9 @@ options intel_vpu dma_mask=48
 MODPROBE_EOF
 
 # Add Intel oneAPI repository for OpenVINO / Level Zero
-mkdir -p /etc/apt/keyrings
-wget -qO - https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor -o /etc/apt/keyrings/oneapi-archive-keyring.gpg --yes || true
-echo "deb [signed-by=/etc/apt/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" > /etc/apt/sources.list.d/oneAPI.list
+if [ -f /etc/apt/keyrings/oneapi-archive-keyring.gpg ]; then
+    echo "deb [signed-by=/etc/apt/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" > /etc/apt/sources.list.d/oneAPI.list
+fi
 
 # ------------------------------------------------------------------------------
 # 3. Nvidia Driver & CUDA Auto-Detection Tooling
