@@ -1,0 +1,33 @@
+# Minimal Modern KDE Plasma Desktop (Wayland Focused)
+plasma-desktop
+plasma-workspace
+plasma-workspace-wayland
+kwin-wayland
+kwin-common
+sddm
+sddm-theme-breeze
+breeze
+breeze-icon-theme
+plasma-nm
+plasma-pa
+powerdevil
+polkit-kde-agent-1
+kde-spectacle
+xdg-desktop-portal
+xdg-desktop-portal-kde
+
+# Essential Core Desktop Applications
+konsole
+dolphin
+kate
+kinfocenter
+kscreen
+kgamma
+qtwayland5
+qml-module-qtquick2
+qml-module-qtquick-controls2
+qml-module-qtquick-layouts
+fonts-liberation
+fonts-noto-core
+fonts-noto-color-emoji
+fonts-jetbrains-mono

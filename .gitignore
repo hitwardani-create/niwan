@@ -1,0 +1,13 @@
+# Build artifacts and chroots
+build_work/
+output/
+*.iso
+*.sha256
+*.squashfs
+*.img
+
+# Temporary and editor files
+*~
+.DS_Store
+*.swp
+*.log

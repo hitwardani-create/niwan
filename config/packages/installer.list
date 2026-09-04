@@ -1,0 +1,14 @@
+# Live Boot & Calamares Installer
+live-boot
+live-config
+live-config-systemd
+calamares
+calamares-settings-debian
+cryptsetup
+btrfs-progs
+dosfstools
+parted
+efibootmgr
+grub-efi-amd64-bin
+grub-pc-bin
+os-prober

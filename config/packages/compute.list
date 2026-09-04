@@ -1,0 +1,33 @@
+# C++ Development & High-Performance Build Toolchain
+build-essential
+cmake
+ninja-build
+clang
+llvm
+lld
+pkg-config
+libomp-dev
+git
+curl
+wget
+
+# Cross-Vendor Vulkan Compute Stack (AMD / Intel / Nvidia)
+libvulkan1
+libvulkan-dev
+vulkan-tools
+mesa-vulkan-drivers
+mesa-utils
+clinfo
+
+# AMD GPU Graphics & Compute Drivers
+libgl1-mesa-dri
+libglx-mesa0
+mesa-va-drivers
+mesa-vdpau-drivers
+
+# Intel Compute & Graphics
+intel-opencl-icd
+intel-media-va-driver-non-free
+
+# Nvidia Support Tools (Auto-Detection & Firmware)
+nvidia-detect

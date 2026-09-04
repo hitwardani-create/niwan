@@ -1,0 +1,33 @@
+# CPU Microcode & Non-Free Firmware for Modern Hardware
+intel-microcode
+amd64-microcode
+firmware-linux
+firmware-linux-free
+firmware-linux-nonfree
+firmware-misc-nonfree
+firmware-realtek
+firmware-iwlwifi
+firmware-atheros
+firmware-libertas
+firmware-broadcom-brcm80211
+firmware-sof-signed
+firmware-intel-misc
+
+# Modern Audio Subsystem (PipeWire with Low Latency)
+pipewire
+pipewire-audio
+pipewire-pulse
+pipewire-alsa
+wireplumber
+libspa-0.2-bluetooth
+libspa-0.2-modules
+
+# Bluetooth
+bluez
+bluez-tools
+
+# Power Management & Thermal Control
+power-profiles-daemon
+acpi
+acpid
+upower

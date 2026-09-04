@@ -1,0 +1,93 @@
+name: Build ApexOS ISO
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  workflow_dispatch:
+    inputs:
+      kernel_flavor:
+        description: "Kernel flavor to install"
+        required: true
+        default: "xanmod"
+        type: choice
+        options:
+          - xanmod
+          - liquorix
+          - debian
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Free disk space on runner
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          df -h
+
+      - name: Install build tools and kernel dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            debootstrap \
+            xorriso \
+            squashfs-tools \
+            dosfstools \
+            mksquashfs \
+            git \
+            curl \
+            wget \
+            tar \
+            zstd \
+            syslinux \
+            syslinux-utils \
+            isolinux \
+            grub-pc-bin \
+            grub-efi-amd64-bin \
+            mtools \
+            qemu-utils
+
+      - name: Configure Kernel Flavor if dispatched
+        if: "${{ github.event.inputs.kernel_flavor != '' }}"
+        run: |
+          sed -i 's/KERNEL_FLAVOR=.*/KERNEL_FLAVOR="${{ github.event.inputs.kernel_flavor }}"/' distro.conf
+          cat distro.conf
+
+      - name: Execute Full ApexOS Build Pipeline
+        run: |
+          sudo ./build.sh --all
+
+      - name: Inspect generated artifacts
+        run: |
+          ls -lh output/
+          cat output/*.sha256
+
+      - name: Upload ISO as Workflow Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: apexos-live-iso
+          path: |
+            output/*.iso
+            output/*.sha256
+          retention-days: 14
+
+      - name: Create GitHub Release (On Tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            output/*.iso
+            output/*.sha256
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

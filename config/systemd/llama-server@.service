@@ -1,0 +1,20 @@
+[Unit]
+Description=llama.cpp High-Performance Local AI Inference Server
+After=network.target sound.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=%h
+ExecStart=/usr/local/bin/llama-server --host 127.0.0.1 --port 8080 --model-dir %h/.local/share/models
+Restart=on-failure
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+# Security & Sandbox limits
+LimitNOFILE=65535
+Nice=5
+
+[Install]
+WantedBy=default.target
