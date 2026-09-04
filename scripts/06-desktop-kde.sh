@@ -32,7 +32,7 @@ EOF
 LIVE_USER_HOME="${ROOTFS_DIR}/home/${LIVE_USER}"
 sudo mkdir -p "${LIVE_USER_HOME}/Desktop"
 
-cat <<EOF | sudo tee "${LIVE_USER_HOME}/Desktop/install-apexos.desktop"
+cat <<EOF | sudo tee "${LIVE_USER_HOME}/Desktop/install-niwan.desktop"
 [Desktop Entry]
 Type=Application
 Version=1.0
@@ -45,7 +45,7 @@ Categories=System;
 StartupNotify=true
 EOF
 
-sudo chmod +x "${LIVE_USER_HOME}/Desktop/install-apexos.desktop"
+sudo chmod +x "${LIVE_USER_HOME}/Desktop/install-niwan.desktop"
 
 # Set up clean user settings and disable bloat in chroot
 sudo chroot "${ROOTFS_DIR}" /bin/bash <<EOF

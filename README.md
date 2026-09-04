@@ -1,7 +1,7 @@
-# ApexOS 🚀
+# Niwan 🚀
 > **Super-Fast, Minimal, AI-Native Debian Linux Distribution**
 
-ApexOS is an ultra-fast, minimal, modern Linux distribution built on **Debian Testing (Trixie)**, optimized for modern PCs and laptops with out-of-the-box hardware acceleration and a native C++ AI development stack.
+Niwan is an ultra-fast, minimal, modern Linux distribution built on **Debian Testing (Trixie)**, optimized for modern PCs and laptops with out-of-the-box hardware acceleration and a native C++ AI development stack.
 
 ---
 
@@ -27,7 +27,7 @@ ApexOS is an ultra-fast, minimal, modern Linux distribution built on **Debian Te
   - **Universal Vulkan Compute**: Pre-configured cross-vendor acceleration for AMD, Intel, and Nvidia.
   - **`llama.cpp` C++ Runtime**: Native binaries (`llama-cli`, `llama-server`) compiled with AVX2, FMA, F16C, and Vulkan backend.
   - **Intel NPU Support**: Pre-configured IVPU kernel modules and OpenVINO / Level Zero driver stack for Meteor Lake, Lunar Lake, and Arrow Lake.
-  - **Nvidia CUDA & AMD ROCm**: Repositories, udev permissions, and automatic driver installer (`apex-setup-nvidia`).
+  - **Nvidia CUDA & AMD ROCm**: Repositories, udev permissions, and automatic driver installer (`niwan-setup-nvidia`).
   - Systemd service template `llama-server@.service` ready to serve models locally at port 8080.
 
 - **Calamares Graphical Installer**:
@@ -86,8 +86,8 @@ sudo ./build.sh --all
 The final bootable ISO and SHA256 checksum will be generated under `output/`:
 ```bash
 ls -lh output/
-# apexos-1.0-alpha-amd64.iso
-# apexos-1.0-alpha-amd64.iso.sha256
+# niwan-1.0-alpha-amd64.iso
+# niwan-1.0-alpha-amd64.iso.sha256
 ```
 
 ### Option 2: Isolated Docker Build
@@ -102,7 +102,7 @@ Build inside an isolated Docker container without altering your host system:
 
 This repository includes [`.github/workflows/build-iso.yml`](file:///.github/workflows/build-iso.yml):
 1. Push this code to your GitHub repository.
-2. Go to **Actions** > **Build ApexOS ISO** > **Run workflow**.
+2. Go to **Actions** > **Build Niwan ISO** > **Run workflow**.
 3. Download the generated ISO artifact directly from the workflow run or GitHub Releases (by pushing a tag `git tag v1.0.0 && git push origin v1.0.0`).
 
 ---
@@ -118,20 +118,20 @@ This repository includes [`.github/workflows/build-iso.yml`](file:///.github/wor
 ### Flash to USB Drive:
 
 ```bash
-sudo dd if=output/apexos-1.0-alpha-amd64.iso of=/dev/sdX bs=4M status=progress conv=fsync
+sudo dd if=output/niwan-1.0-alpha-amd64.iso of=/dev/sdX bs=4M status=progress conv=fsync
 ```
 *(Replace `/dev/sdX` with your USB drive identifier)*
 
 ---
 
-## 💻 Built-in Commands in ApexOS
+## 💻 Built-in Commands in Niwan
 
-Once booted into ApexOS, you have access to native compute tools:
+Once booted into Niwan, you have access to native compute tools:
 
 | Command | Description |
 |---|---|
-| `apex-hardware` | Inspect detected CPU, Vulkan GPUs, Nvidia CUDA, and Intel NPU status |
-| `apex-setup-nvidia` | One-click automated installer for proprietary Nvidia drivers and CUDA |
+| `niwan-hardware` | Inspect detected CPU, Vulkan GPUs, Nvidia CUDA, and Intel NPU status |
+| `niwan-setup-nvidia` | One-click automated installer for proprietary Nvidia drivers and CUDA |
 | `llama-cli` | High-performance C++ CLI inference engine |
 | `llama-server` | High-performance local OpenAI-compatible inference server |
 | `systemctl --user start llama-server@$USER` | Run local AI server in background on port 8080 |

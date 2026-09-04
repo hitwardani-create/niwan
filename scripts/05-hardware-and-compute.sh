@@ -22,7 +22,7 @@ export DEBIAN_FRONTEND=noninteractive
 # 1. Hardware Detection & Device Permissions (UDEV)
 # ------------------------------------------------------------------------------
 mkdir -p /etc/udev/rules.d
-cat <<'UDEV_EOF' > /etc/udev/rules.d/99-apex-compute.rules
+cat <<'UDEV_EOF' > /etc/udev/rules.d/99-niwan-compute.rules
 # AMD KFD & Render nodes
 KERNEL=="kfd", MODE="0666", GROUP="render"
 SUBSYSTEM=="drm", KERNEL=="renderD*", MODE="0666", GROUP="render"
@@ -48,7 +48,7 @@ echo "deb [signed-by=/etc/apt/keyrings/oneapi-archive-keyring.gpg] https://apt.r
 # ------------------------------------------------------------------------------
 # 3. Nvidia Driver & CUDA Auto-Detection Tooling
 # ------------------------------------------------------------------------------
-cat <<'NVIDIA_HELPER' > /usr/local/bin/apex-setup-nvidia
+cat <<'NVIDIA_HELPER' > /usr/local/bin/niwan-setup-nvidia
 #!/usr/bin/env bash
 set -euo pipefail
 echo "[*] Detecting Nvidia GPU hardware..."
@@ -62,15 +62,15 @@ else
     echo "[-] No Nvidia GPU detected on this system."
 fi
 NVIDIA_HELPER
-chmod +x /usr/local/bin/apex-setup-nvidia
+chmod +x /usr/local/bin/niwan-setup-nvidia
 
 # ------------------------------------------------------------------------------
-# 4. Universal Compute Status Utility (apex-hardware)
+# 4. Universal Compute Status Utility (niwan-hardware)
 # ------------------------------------------------------------------------------
-cat <<'HW_HELPER' > /usr/local/bin/apex-hardware
+cat <<'HW_HELPER' > /usr/local/bin/niwan-hardware
 #!/usr/bin/env bash
 echo "=================================================="
-echo "          ApexOS Hardware Compute Status          "
+echo "          Niwan Hardware Compute Status           "
 echo "=================================================="
 echo -e "\n[CPU / Architecture]:"
 lscpu | grep -E 'Model name|Architecture|CPU max MHz|Thread'
@@ -86,7 +86,7 @@ echo -e "\n[Nvidia GPUs]:"
 if command -v nvidia-smi &>/dev/null; then
     nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader || echo "Nvidia GPU driver inactive."
 else
-    echo "Nvidia driver not loaded (Run 'sudo apex-setup-nvidia' if you have an Nvidia GPU)."
+    echo "Nvidia driver not loaded (Run 'sudo niwan-setup-nvidia' if you have an Nvidia GPU)."
 fi
 
 echo -e "\n[Intel NPU / Compute Accelerators]:"
@@ -99,7 +99,7 @@ fi
 
 echo "=================================================="
 HW_HELPER
-chmod +x /usr/local/bin/apex-hardware
+chmod +x /usr/local/bin/niwan-hardware
 
 # ------------------------------------------------------------------------------
 # 5. Build & Install llama.cpp Native C++ Engine (with Vulkan Backend)

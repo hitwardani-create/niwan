@@ -57,12 +57,12 @@ fi
 set menu_color_normal=white/black
 set menu_color_highlight=black/light-gray
 
-menuentry "Start ApexOS 1.0 (Live KDE Plasma Wayland)" {
+menuentry "Start ${DISTRO_NAME} 1.0 (Live KDE Plasma Wayland)" {
     linux /live/vmlinuz boot=live components quiet splash loglevel=3 apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=1
     initrd /live/initrd.img
 }
 
-menuentry "Start ApexOS 1.0 (Safe Graphics / Fallback Mode)" {
+menuentry "Start ${DISTRO_NAME} 1.0 (Safe Graphics / Fallback Mode)" {
     linux /live/vmlinuz boot=live components nomodeset quiet splash
     initrd /live/initrd.img
 }
@@ -75,24 +75,24 @@ GRUBCFG_EOF
 # 4. Prepare EFI System Partition
 echo "[*] Creating EFI Boot Image..."
 mkdir -p "${ISO_DIR}/EFI/BOOT"
-mkdir -p /tmp/apex_efi_mount
+mkdir -p /tmp/niwan_efi_mount
 
 dd if=/dev/zero of="${ISO_DIR}/EFI/efiboot.img" bs=1M count=20 status=none
 mkfs.vfat "${ISO_DIR}/EFI/efiboot.img" > /dev/null
 
-sudo mount "${ISO_DIR}/EFI/efiboot.img" /tmp/apex_efi_mount
-sudo mkdir -p /tmp/apex_efi_mount/EFI/BOOT
+sudo mount "${ISO_DIR}/EFI/efiboot.img" /tmp/niwan_efi_mount
+sudo mkdir -p /tmp/niwan_efi_mount/EFI/BOOT
 
 # Install GRUB EFI binary if available
 if [ -f /usr/lib/grub/x86_64-efi/monolithic/grubx64.efi ]; then
-    sudo cp /usr/lib/grub/x86_64-efi/monolithic/grubx64.efi /tmp/apex_efi_mount/EFI/BOOT/BOOTX64.EFI
+    sudo cp /usr/lib/grub/x86_64-efi/monolithic/grubx64.efi /tmp/niwan_efi_mount/EFI/BOOT/BOOTX64.EFI
 elif command -v grub-mkstandalone &>/dev/null; then
-    sudo grub-mkstandalone -O x86_64-efi -o /tmp/apex_efi_mount/EFI/BOOT/BOOTX64.EFI "boot/grub/grub.cfg=${ISO_DIR}/boot/grub/grub.cfg"
+    sudo grub-mkstandalone -O x86_64-efi -o /tmp/niwan_efi_mount/EFI/BOOT/BOOTX64.EFI "boot/grub/grub.cfg=${ISO_DIR}/boot/grub/grub.cfg"
 fi
 
-sudo cp "${ISO_DIR}/boot/grub/grub.cfg" /tmp/apex_efi_mount/EFI/BOOT/grub.cfg 2>/dev/null || true
-sudo umount /tmp/apex_efi_mount
-rm -rf /tmp/apex_efi_mount
+sudo cp "${ISO_DIR}/boot/grub/grub.cfg" /tmp/niwan_efi_mount/EFI/BOOT/grub.cfg 2>/dev/null || true
+sudo umount /tmp/niwan_efi_mount
+rm -rf /tmp/niwan_efi_mount
 
 # Copy BOOTX64.EFI to ISO structure as well
 if [ -f /usr/lib/grub/x86_64-efi/monolithic/grubx64.efi ]; then
@@ -124,6 +124,6 @@ echo "[*] Calculating SHA256 checksum..."
 sha256sum "${ISO_OUTPUT_PATH}" | tee "${ISO_OUTPUT_PATH}.sha256"
 
 echo "=================================================="
-echo "[+] SUCCESS! ApexOS ISO generated at:"
+echo "[+] SUCCESS! ${DISTRO_NAME} ISO generated at:"
 echo "    ${ISO_OUTPUT_PATH}"
 echo "=================================================="

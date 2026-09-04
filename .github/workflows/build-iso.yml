@@ -1,4 +1,4 @@
-name: Build ApexOS ISO
+name: Build Niwan ISO
 
 on:
   push:
@@ -61,7 +61,7 @@ jobs:
           sed -i 's/KERNEL_FLAVOR=.*/KERNEL_FLAVOR="${{ github.event.inputs.kernel_flavor }}"/' distro.conf
           cat distro.conf
 
-      - name: Execute Full ApexOS Build Pipeline
+      - name: Execute Full Niwan Build Pipeline
         run: |
           sudo ./build.sh --all
 
@@ -73,7 +73,7 @@ jobs:
       - name: Upload ISO as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: apexos-live-iso
+          name: niwan-live-iso
           path: |
             output/*.iso
             output/*.sha256

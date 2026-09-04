@@ -1,0 +1,24 @@
+---
+componentName: niwan
+windowExpanding: normal
+windowSize: 850px, 550px
+
+strings:
+    productName:         Niwan
+    version:             1.0-alpha
+    shortProductName:    Niwan
+    versionedName:       Niwan 1.0-alpha
+    shortVersionedName:  Niwan 1.0
+    bootloaderEntryName: Niwan
+    productUrl:          https://github.com/niwan-os/niwan
+    supportUrl:          https://github.com/niwan-os/niwan/issues
+    releaseNotesUrl:     https://github.com/niwan-os/niwan/releases
+
+images:
+    productLogo:         "/usr/share/icons/hicolor/scalable/apps/distributor-logo.svg"
+    productIcon:         "/usr/share/icons/hicolor/scalable/apps/distributor-logo.svg"
+
+slideshow:               []
+style:
+   sidebar: "#111418"
+   navigation: "#181e24"

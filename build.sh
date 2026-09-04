@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# ApexOS Master Build Script
+# Niwan Master Build Script
 # ==============================================================================
 set -euo pipefail
 
@@ -9,12 +9,11 @@ source "${SCRIPT_DIR}/distro.conf"
 
 print_banner() {
     cat <<'EOF'
-    ___                             ____  _____
-   /   |  ____  ___  _  __         / __ \/ ___/
-  / /| | / __ \/ _ \| |/_/ ______ / / / /\__ \ 
- / ___ |/ /_/ /  __/>  <  /_____// /_/ /___/ / 
-/_/  |_/ .___/\___/_/|_|         \____//____/  
-      /_/                                      
+    _   ___                         
+   / | / (_)      ______ _____      
+  /  |/ / / | /| / / __ `/ __ \     
+ / /|  / /| |/ |/ / /_/ / / / /     
+/_/ |_/_/ |__/|__/\__,_/_/ /_/      
        High-Performance AI-Native Debian OS
 EOF
     echo "Distro: ${DISTRO_NAME} (${DISTRO_CODENAME}) v${DISTRO_VERSION}"
@@ -84,11 +83,11 @@ test_qemu() {
 build_docker() {
     echo "[*] Building ISO via Docker container..."
     cd "${SCRIPT_DIR}/docker"
-    docker build -t apexos-builder .
+    docker build -t niwan-builder .
     docker run --privileged --rm \
         -v "${SCRIPT_DIR}:/workspace" \
         -w /workspace \
-        apexos-builder \
+        niwan-builder \
         ./build.sh --all
 }
 
